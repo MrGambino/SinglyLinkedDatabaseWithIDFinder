@@ -1,0 +1,41 @@
+VERBOSE DEBUG LOGS ~ Thu Jul 12 14:58:39 EDT 2018 ~ https_uniqueId10_validation_hourly.txt ~ 
+
+Creating 10 Unique IDs ..
+0.0 % Completed! ~ ELAPSED TIME: 37.134516 seconds ~ 
+[LAST]->[FIRST]
+
+10.0 % Completed! ~ ELAPSED TIME: 38.038222 seconds ~ 
+[LAST]-> {314940108} ->[FIRST]
+
+20.0 % Completed! ~ ELAPSED TIME: 38.119323 seconds ~ 
+[LAST]-> {952021573} -> {314940108} ->[FIRST]
+
+30.0 % Completed! ~ ELAPSED TIME: 38.214727 seconds ~ 
+[LAST]-> {637538661} -> {952021573} -> {314940108} ->[FIRST]
+
+40.0 % Completed! ~ ELAPSED TIME: 38.270335 seconds ~ 
+[LAST]-> {718159773} -> {637538661} -> {952021573} -> {314940108} ->[FIRST]
+
+50.0 % Completed! ~ ELAPSED TIME: 38.401761 seconds ~ 
+[LAST]-> {605546262} -> {718159773} -> {637538661} -> {952021573} -> {314940108} ->[FIRST]
+
+60.0 % Completed! ~ ELAPSED TIME: 38.544958 seconds ~ 
+[LAST]-> {44833973} -> {605546262} -> {718159773} -> {637538661} -> {952021573} -> {314940108} ->[FIRST]
+
+70.0 % Completed! ~ ELAPSED TIME: 38.662004 seconds ~ 
+[LAST]-> {423996525} -> {44833973} -> {605546262} -> {718159773} -> {637538661} -> {952021573} -> {314940108} ->[FIRST]
+
+80.0 % Completed! ~ ELAPSED TIME: 38.764545 seconds ~ 
+[LAST]-> {22573561} -> {423996525} -> {44833973} -> {605546262} -> {718159773} -> {637538661} -> {952021573} -> {314940108} ->[FIRST]
+
+90.0 % Completed! ~ ELAPSED TIME: 38.863911 seconds ~ 
+[LAST]-> {424908870} -> {22573561} -> {423996525} -> {44833973} -> {605546262} -> {718159773} -> {637538661} -> {952021573} -> {314940108} ->[FIRST]
+
+100.0 % Completed! ~ ELAPSED TIME: 39.019505 seconds ~ 
+[LAST]-> {952745487} -> {424908870} -> {22573561} -> {423996525} -> {44833973} -> {605546262} -> {718159773} -> {637538661} -> {952021573} -> {314940108} ->[FIRST]
+
+
+100 % Completed! ~ ELAPSED TIME: 39.309488 seconds ~ 
+Generating ID has passed, 10 unique IDs can be used for validation for 1 hour.
+
+ ~ EOF ~
