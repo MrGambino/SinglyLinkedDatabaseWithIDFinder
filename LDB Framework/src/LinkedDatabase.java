@@ -68,6 +68,27 @@ public class LinkedDatabase extends LinkedDatabaseFramework {
 		return str;
 	}
 	
+	public String tableBuilder() {
+		LinkedDatabaseFramework cur = Head.getNext();
+		int firstNode = 1; 	// Offset Point -> The linked list starts from 1 not 0
+							// If the firstNode is 0 the identifier is -1 so to 
+							//offset this it has to be 1 
+		StringBuilder sBuilder = new StringBuilder();
+		sBuilder.append(String.format("%-20s%-20s%-20s%-20s\n", "Identifier #", "ID", "Full Name", "Memory Location\t\tAddr\t\t\tUnique-ID"));
+		sBuilder.append(String.format(
+				"==============================================================================================================================\n"));
+		while (cur != null) {
+			sBuilder.append(String.format("%-20s", (firstNode - 1)));
+			sBuilder.append(String.format("%-20s", "{" + cur.getItem() + "}"));
+			sBuilder.append(String.format("%-20s", cur.getFullName()));
+			sBuilder.append(String.format("%-20s", Integer.toHexString(cur.hashCode())));
+			sBuilder.append(String.format("%-20s\n", "\t@"+cur.hashCode()+"\t\tUID# "+LDB_SaveAndPopulateUniqueIDs.generateID()));
+			firstNode++;
+			cur = cur.getNext();
+		}
+		return sBuilder.toString();
+	}
+	
 	public String settingsSaver() {
 		String str = "";
 		LinkedDatabaseFramework cur = Head.getNext();
