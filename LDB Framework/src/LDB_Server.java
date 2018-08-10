@@ -10,9 +10,9 @@ import com.sun.net.httpserver.HttpServer;
 
 public class LDB_Server {
 	public static void main(String[] args) throws Exception {
-		System.out.println("Server Starting ....");
+		System.out.println(LDB_SaveAndPopulateUniqueIDs.updateCurrentTime() +" - Server Starting ....");
 		HttpServer server = HttpServer.create(new InetSocketAddress("localhost", 8181), 8181);
-		System.out.println("DEFAULT URL: http://localhost:8181/auth/login/index.html\n");
+		System.out.println(LDB_SaveAndPopulateUniqueIDs.updateCurrentTime() +" - DEFAULT URL: http://localhost:8181/auth/login/index.html\n");
 		server.createContext("/auth/login", new MyHandler());
 		server.setExecutor(null); // creates a default executor
 		server.start();
@@ -28,7 +28,7 @@ public class LDB_Server {
 			    Files.copy(file.toPath(), os);
 			}
 			
-			System.out.println("REQUESTED: "+ t.getRequestURI());
+			System.out.println(LDB_SaveAndPopulateUniqueIDs.updateCurrentTime() +" - REQUESTED: "+ t.getRequestURI());
 			t.sendResponseHeaders(200, response.length());
 			OutputStream os = t.getResponseBody();
 			t.getResponseHeaders().set("Content-Type", "text/html"); 
