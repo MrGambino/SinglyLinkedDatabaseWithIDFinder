@@ -5,12 +5,12 @@ The Client-Side will send the user credential through an encrypted HTTPS server 
 
 The LDB database uses modern password hashing. When the user first makes a password the server will automatically assign a random ID and salt (String). Using the password and salt, the server will encrypt and only save the hash of the password {ex. (SHA512(password + salt)).HASH -> DB}. This means even if the server was hacked, the hacker will not be able to get the password easily and tey would have a hard time craking the encrypted hash passwords. 
 
-# BETA - Features 
+# Features 
 * Create, Edit, and Delete Accounts (Database)
 * Locks for 15 min if password is wrong
 * Bash-like UI with unique commands 
 
-# Screenshots 
+# Server-Side Screenshots (BETA)
 
 
 ### Home Page
