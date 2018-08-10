@@ -1,5 +1,5 @@
 # LinkedDatabase Frameworks (SERVER)
-Using Java WebSocket and Dynamic Web Editor, this is server socket is able to auto-generator, find ID, and remove selected users from the LDB Framework (Server-Side). 
+Using Java WebSocket and Dynamic Web Editor, this server-socket is able to auto-generate, find user IDs, and remove selected users from the LDB Framework (Server-Side). 
 
 The Client-Side will send the user credential through an encrypted HTTPS server and the LDB server will match the sent credential with the database credential if they match the server will send back a "PASS" or let the user login else, it will send a "FAIL" or credentials don't match alert.
 
