@@ -7,7 +7,7 @@ import java.util.Scanner;
 
 public class LDBQueries extends LinkedDatabaseFramework{
 	// Version INFO
-	private static final String VERSION = "Version 1.1.0";
+	private static final String VERSION = "Version 1.1.1";
 	
 	// Login Credentials
 	protected LinkedDatabase rootAccounts = new LinkedDatabase();

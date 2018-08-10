@@ -10,6 +10,7 @@ import com.sun.net.httpserver.HttpServer;
 
 public class LDB_Server {
 	public static void main(String[] args) throws Exception {
+		System.out.println("Server Starting ....");
 		HttpServer server = HttpServer.create(new InetSocketAddress("localhost", 8181), 8181);
 		server.createContext("/auth/login", new MyHandler());
 		server.setExecutor(null); // creates a default executor
