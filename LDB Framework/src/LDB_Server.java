@@ -21,7 +21,7 @@ public class LDB_Server {
 		public void handle(HttpExchange t) throws IOException {
 			String response = "Welcome to LinkedDatabase Framework!";			
 			
-			File file = new File("html/PUBLIC/index.html");
+			File file = new File("LDB Framework/interface/index.html");
 			t.sendResponseHeaders(200, file.length());
 			try (OutputStream os = t.getResponseBody()) {
 			    Files.copy(file.toPath(), os);
