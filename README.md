@@ -2,7 +2,6 @@
 [![forthebadge](https://forthebadge.com/images/badges/made-with-javascript.svg)](https://www.javascript.com/)
 [![forthebadge](https://forthebadge.com/images/badges/uses-html.svg)](https://en.wikipedia.org/wiki/HTML)
 [![forthebadge](https://forthebadge.com/images/badges/uses-css.svg)](https://en.wikipedia.org/wiki/Cascading_Style_Sheets)
-[![forthebadge](https://forthebadge.com/images/badges/powered-by-oxygen.svg)](https://en.wikipedia.org/wiki/Oxygen)
 
 # LinkedDatabase Frameworks (SERVER)
 Using Java WebSocket and Dynamic Web Editor, this server-socket is able to auto-generate, find user IDs, and remove selected users from the LDB Framework (Server-Side). 
