@@ -1,6 +1,7 @@
 [![forthebadge](https://forthebadge.com/images/badges/made-with-java.svg)](https://docs.oracle.com/javase/8/docs/api/)
 [![forthebadge](https://forthebadge.com/images/badges/made-with-javascript.svg)](https://www.javascript.com/)
-[![forthebadge](https://forthebadge.com/images/badges/built-with-love.svg)](https://en.wikipedia.org/wiki/Love)
+[![forthebadge](https://forthebadge.com/images/badges/uses-html.svg)](https://en.wikipedia.org/wiki/HTML)
+[![forthebadge](https://forthebadge.com/images/badges/uses-css.svg)](https://en.wikipedia.org/wiki/Cascading_Style_Sheets)
 [![forthebadge](https://forthebadge.com/images/badges/powered-by-oxygen.svg)](https://en.wikipedia.org/wiki/Oxygen)
 
 # LinkedDatabase Frameworks (SERVER)
