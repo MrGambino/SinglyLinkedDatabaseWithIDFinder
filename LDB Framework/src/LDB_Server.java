@@ -11,7 +11,7 @@ import com.sun.net.httpserver.HttpServer;
 public class LDB_Server {
 	public static void main(String[] args) throws Exception {
 		System.out.println("Server Starting ....");
-		HttpServer server = HttpServer.create(new InetSocketAddress("localhost", 8181), 8181);
+		HttpServer server = HttpServer.create(new InetSocketAddress("localhost", 3000), 8181);
 		server.createContext("/auth/login", new MyHandler());
 		server.setExecutor(null); // creates a default executor
 		server.start();
@@ -21,12 +21,11 @@ public class LDB_Server {
 		public void handle(HttpExchange t) throws IOException {
 			String response = "Welcome to LinkedDatabase Framework!";			
 			
-			File file = new File("html/PUBLIC/index.html");
-			t.sendResponseHeaders(200, file.length());
+			File index = new File("LDB Framework/interface/index.html");
+			t.sendResponseHeaders(200, index.length());
 			try (OutputStream os = t.getResponseBody()) {
-			    Files.copy(file.toPath(), os);
+			    Files.copy(index.toPath(), os);
 			}
-			
 			t.sendResponseHeaders(200, response.length());
 			OutputStream os = t.getResponseBody();
 			t.getResponseHeaders().set("Content-Type", "text/html"); 
