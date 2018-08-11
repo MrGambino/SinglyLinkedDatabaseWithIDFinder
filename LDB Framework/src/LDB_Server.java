@@ -5,7 +5,7 @@ import java.util.jar.*;
 import java.util.zip.*;
 import com.sun.net.httpserver.*;
 
-public class LDB_Server implements HttpHandler {
+public class LDB_Server extends LinkedDatabaseFramework implements HttpHandler {
 	// Server variables
 	static HttpServer server;
 	private static Map<String, Asset> data = new HashMap<String, Asset>();
