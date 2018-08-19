@@ -8,7 +8,7 @@ Using Java WebSocket and Dynamic Web Editor, this server-socket is able to auto-
 
 The Client-Side will send the user credential through an encrypted HTTPS server and the LDB server will match the sent credential with the database credential if they match the server will send back a "PASS" or let the user login else, it will send a "FAIL" or credentials don't match alert.
 
-The LDB database uses modern password hashing. When the user first makes a password the server will automatically assign a random ID and salt (String). Using the password and salt, the server will encrypt and only save the hash of the password {ex. (SHA512(password + salt)).HASH -> DB}. This means even if the server was hacked, the hacker will not be able to get the password easily and tey would have a hard time craking the encrypted hash passwords. 
+The LDB database uses modern password hashing. When the user first makes a password the server will automatically assign a random ID and salt (String). Using the password and salt, the server will encrypt and only save the hash of the password {ex. (SHA512(password + salt)).HASH -> DB}. This means even if the server was hacked, the hacker will not be able to get the password easily and they would have a hard time cracking the encrypted hash passwords. 
 
 # Features 
 * Create, Edit, and Delete Accounts (Database)
@@ -38,3 +38,4 @@ The LDB database uses modern password hashing. When the user first makes a passw
 * Automated Login (Admin-Only)
 * Network Handling - Admin vs. User website Re-directing (Admin-Only)
 * Virtual/Nano LDB Framework (Admin + User)
+* Implement YubiKey Two-factor Authenticator + NFC for IOS/Android 
