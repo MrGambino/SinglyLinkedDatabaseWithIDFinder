@@ -38,4 +38,4 @@ The LDB database uses modern password hashing. When the user first makes a passw
 * Automated Login (Admin-Only)
 * Network Handling - Admin vs. User website Re-directing (Admin-Only)
 * Virtual/Nano LDB Framework (Admin + User)
-* Implement YubiKey Two-factor Authenticator + NFC for IOS/Android 
+* Implement U2F/FIDO Authentication + NFC support for IOS/Android 
