@@ -7,10 +7,11 @@ import com.sun.net.httpserver.*;
 
 public class LDB_Server extends LinkedDatabaseFramework implements HttpHandler {
 	// Server variables
-	static HttpServer server;
-	private static Map<String, Asset> data = new HashMap<String, Asset>();
+	public  static HttpServer server;
+	public  static Map<String, Asset> data = new HashMap<String, Asset>();
 	private final boolean caching, gzip;
 	private final String pathToRoot;
+	public  static int port = 8000;
 
 	public LDB_Server(String pathToRoot, boolean caching, boolean gzip) throws IOException {
 		this.caching = caching;
@@ -25,7 +26,7 @@ public class LDB_Server extends LinkedDatabaseFramework implements HttpHandler {
 			processFile("", f, gzip);
 	}
 
-	private static class Asset {
+	public static class Asset {
 		public final byte[] data;
 
 		public Asset(byte[] data) {
@@ -69,10 +70,10 @@ public class LDB_Server extends LinkedDatabaseFramework implements HttpHandler {
 			httpExchange.getResponseBody().close();
 
 		} catch (NullPointerException t) {
-			System.out.println(LDB_SaveAndPopulateUniqueIDs.updateCurrentTime() + " - Local:~ Fetch Error: " + path);
+			System.out.println("\n" + LDB_SaveAndPopulateUniqueIDs.updateCurrentTime() + " - Local:~ Fetch Error: " + path);
 		} catch (Throwable t) {
-			System.out.println(LDB_SaveAndPopulateUniqueIDs.updateCurrentTime() + " - Local:~ Fetch Error: " + path);
-			t.printStackTrace();
+			System.out.println("\n" + LDB_SaveAndPopulateUniqueIDs.updateCurrentTime() + " - Local:~ Fetch Error: " + path);
+			System.out.println("\n" + LDB_SaveAndPopulateUniqueIDs.updateCurrentTime() + " - Local:~ Fetch Error: " + t);
 		}
 	}
 
@@ -165,18 +166,11 @@ public class LDB_Server extends LinkedDatabaseFramework implements HttpHandler {
 
 		return resources;
 	}
-
-	public static void main(String[] args) throws IOException {
-		// if (args.length < 1 || args[0].equals("-help") || args[0].equals("--help")) {
-		// System.out.println("Usage: java -jar HttpServer.jar $webroot [$port]");
-		// return;
-		// }
-		server = HttpServer.create();
-		server.createContext("/", new LDB_Server("LDB Framework/interface", false, false));
-		int port = args.length > 1 ? Integer.parseInt(args[1]) : 8000;
-		server.bind(new InetSocketAddress("localhost", port), 100);
-		System.out.println(LDB_SaveAndPopulateUniqueIDs.updateCurrentTime() + " - Local:~ Server Starting ....");
-		server.start();
-		System.out.println(LDB_SaveAndPopulateUniqueIDs.updateCurrentTime() + " - Local:~ http://localhost:" + port + "/");
-	}
+	
+	static void closeServerConnection() {
+		// TODO Auto-generated method stub
+		System.out.println("\n" + LDB_SaveAndPopulateUniqueIDs.updateCurrentTime() + " - Local:~ Server Connection Stopped");
+		System.out.println(LDB_SaveAndPopulateUniqueIDs.updateCurrentTime() + " - Local:~ http://localhost:" + port + "/" + " --> Connection Disabled");
+		server.stop(port);
+	}	
 }

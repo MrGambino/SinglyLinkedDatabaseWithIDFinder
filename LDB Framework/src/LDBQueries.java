@@ -2,8 +2,31 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.net.InetSocketAddress;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
+import com.sun.net.httpserver.HttpServer;
+
+/**
+ * Using Java WebSocket and Dynamic Web Editor, this server-socket is able to
+ * auto-generate unique codes, find user IDs, and remove selected users from the
+ * LinkedDatabase Framework (LDB Server-Side).
+ * 
+ * The Client-Side will send the user credential through an encrypted HTTPS
+ * server and the LDB server will match the sent credential with the database
+ * credential if they match the server will send back a "PASS" or let the user
+ * login else, it will send a "FAIL" or credentials don't match alert.
+ * 
+ * The LDB database uses modern password hashing. When the user first makes a
+ * password the server will automatically assign a random ID and salt (String).
+ * Using the password and salt, the server will encrypt and only save the hash
+ * of the password {ex. (SHA512(password + salt)).HASH -> DB}. This means even
+ * if the server was hacked, the hacker will not be able to get the password
+ * easily and they would have a hard time cracking the encrypted hash passwords.
+ * 
+ * @author Sirak Berhane
+ * @version VERSION 1.1.1 REV 45
+ */
 
 public class LDBQueries extends LinkedDatabaseFramework{
 	// Version INFO
@@ -33,7 +56,7 @@ public class LDBQueries extends LinkedDatabaseFramework{
 	private static String encrypt_User, decrypt_User;
 	private static String encryptSUPER_Pass; //decryptSUPER_Pass;
 	private static String encrypt_Pass; //decrypt_Pass;
-	private static Integer $databaseSAVED = 0;
+	public  static Integer $databaseSAVED = 0;
 	private static Integer $numberOfTerminalRuns;
 	private static String tempTR_SU;
 	
@@ -55,6 +78,9 @@ public class LDBQueries extends LinkedDatabaseFramework{
 	// New Query Type
 	protected static LDBQueries newQueryLDB; // Super User Only
 	protected static LDBQueries newQueryLDB_U; // Non SU Only
+	
+	// Server OFF/ON flag
+	protected static boolean forceServerStart = false;
 
 	public LDBQueries(Object username, Object password, boolean superUser) {
 		// Super-User
@@ -107,7 +133,7 @@ public class LDBQueries extends LinkedDatabaseFramework{
 		LDBQueries.failedToLogin = failedToLogin;
 	}
 
-	protected static void welcomeSetUp() throws FileNotFoundException, UnsupportedEncodingException {
+	protected static void welcomeSetUp() throws IOException {
 		// Check File for setup
 		File configFile = new File("saveUpdatedLDB.txt");
 		File configFile2 = new File("saveUpdatedLDB_U.txt");
@@ -115,6 +141,13 @@ public class LDBQueries extends LinkedDatabaseFramework{
 		IDFile = new File("saveLDB_UniqueID.txt");
 		if (configFile.exists() && configFile2.exists() && IDFile.exists() && configFile3.exists()) {
 			/*--> (2)*/loginPrompt();
+			forceServerStart =  true;
+			LDB_Server.server = HttpServer.create();
+			LDB_Server.server.createContext("/", new LDB_Server("LDB Framework/interface", false, false));
+			LDB_Server.server.bind(new InetSocketAddress("localhost", LDB_Server.port), 100);
+			System.out.println("\n" + LDB_SaveAndPopulateUniqueIDs.updateCurrentTime() + " - Local:~ Server Connection Starting ....");
+			LDB_Server.server.start();
+			System.out.println(LDB_SaveAndPopulateUniqueIDs.updateCurrentTime() + " - Local:~ http://localhost:" + LDB_Server.port + "/" + "\n");
 		} else {
 			System.out.println(LDB_SaveAndPopulateUniqueIDs.updateCurrentTime() + " - Local:~ LDB_Framework$ Setup Wizard Starting Up ... ");	
 			System.out.println(LDB_SaveAndPopulateUniqueIDs.updateCurrentTime() + " - Local:~ LDB_Framework$ New Setup Request --> ID# " + newIDString + "\n");
@@ -523,6 +556,24 @@ public class LDBQueries extends LinkedDatabaseFramework{
 		if (cmd.equals("USERS -SID.AUTH")) {
 			System.out.println(LDB_SaveAndPopulateUniqueIDs.updateCurrentTime() + " - Local:~ LDB_Framework$ " + "Your static ID ---> " + ID);
 		}
+		
+		
+		// Note: Server-ONLY commands (port 8000)
+		if (cmd.equals("GET SERVER hashCode")) {
+			System.out.print(LDB_SaveAndPopulateUniqueIDs.updateCurrentTime() + " - Local:~ LDB_Framework$ " + LDB_Server.server.hashCode() + "\n");
+		}
+		
+		if (cmd.equals("GET SERVER assets")) {
+			for (LDB_Server.Asset asset: LDB_Server.data.values()) {
+				System.out.print(LDB_SaveAndPopulateUniqueIDs.updateCurrentTime() + " - Local:~ LDB_Framework$ " + asset.toString() + "\n");
+			}
+		}
+		
+		if (cmd.equals("GET SERVER data")) {
+			for (String data$: LDB_Server.data.keySet()) {
+				System.out.print(LDB_SaveAndPopulateUniqueIDs.updateCurrentTime() + " - Local:~ LDB_Framework$ " + data$ + "\n");
+			}
+		}	
 	}
 
 	public static void continousPrompt() throws FileNotFoundException, UnsupportedEncodingException {
@@ -609,12 +660,20 @@ public class LDBQueries extends LinkedDatabaseFramework{
 		}
 	}
 
-	public static void main(String[] args) throws FileNotFoundException, UnsupportedEncodingException, NoSuchElementException {
+	public static void main(String[] args) throws NoSuchElementException, IOException {
+		// if (args.length < 1 || args[0].equals("-help") || args[0].equals("--help")) {
+				// System.out.println("Usage: java -jar LDBQueries.jar $webroot [$port]");
+				// return;
+				// }
+		
 		/* ::Start::--> (1) */welcomeSetUp(); // Login Setup 
-					$databaseSAVED = 1;
+		$databaseSAVED = 1;
 		/*--> (3)*/LDBFrameworkOptions();
 		/*--> (4)*/continousPrompt();
 		/*--> (5A)*/postLoginConfig(true);
 		/*--> (5B)*/postLoginConfig(false);
+		if (forceServerStart == true) {
+			LDB_Server.closeServerConnection();
+		}
 	}
 }
