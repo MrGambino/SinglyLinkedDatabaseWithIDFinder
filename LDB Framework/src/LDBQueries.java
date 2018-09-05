@@ -47,7 +47,7 @@ public class LDBQueries extends LinkedDatabaseFramework{
 		* Current method is not safe as the BASE64 can be reversed 
 		* Using HashMap is best way to store login authentication 
 		* To safely store passwords in the LDBFrameworks use the following algorithm:
-			-> User-name=[HASH_FUNCTION(SHA512(MD5(<User-name> + Salt)))] 
+			-> Username=[HASH_FUNCTION(SHA512(MD5(<User-name> + Salt)))] 
 			-> Password=[HASH_FUNCTION(SHA512(MD5(<Password> + Salt)))] 	
 	*/
 	
@@ -452,6 +452,7 @@ public class LDBQueries extends LinkedDatabaseFramework{
 			LDBFrameworkOptions();
 		}
 		
+		// Database Commands
 		if (cmd.equals("USERS -SU")) {
 			if (DBusername.equals("Admin") || DBusername.equals("root") || DBusername.equals("rootSU")) {
 				System.out.println("\n\t~ Current Authentication Database (ADMIN) ~\n");
@@ -573,6 +574,26 @@ public class LDBQueries extends LinkedDatabaseFramework{
 			for (String data$: LDB_Server.data.keySet()) {
 				System.out.print(LDB_SaveAndPopulateUniqueIDs.updateCurrentTime() + " - Local:~ LDB_Framework$ " + data$ + "\n");
 			}
+		}
+		
+		// System-wide Command
+		if (cmd.equals("LDBFrameworks.SYSTEM[exit -s] -All Services")) {
+			/*--> (5A)*/postLoginConfig(true);
+			/*--> (5B)*/postLoginConfig(false);
+			if (forceServerStart == true) {
+				LDB_Server.closeServerConnection();
+			}
+			scanner.close();
+			System.exit(0);
+		}
+		
+		if (cmd.equals("")) {
+			if (forceServerStart == true) {
+				System.err.print("\n" + LDB_SaveAndPopulateUniqueIDs.updateCurrentTime() + " - Local:~ LDB_Framework$ ERROR OCCURED -> No command given. Type \"help\" for a list of commands. \nNote: Some commands may need Admin setting configuration and they may be hidden for security reasons."  + "\n\n");
+			} else {
+				/*--> (5A)*/postLoginConfig(true);
+				/*--> (5B)*/postLoginConfig(false);
+			}
 		}	
 	}
 
@@ -591,7 +612,7 @@ public class LDBQueries extends LinkedDatabaseFramework{
 			System.out.print(LDB_SaveAndPopulateUniqueIDs.updateCurrentTime() + " - Local:~ LDB_Framework$ ");
 			command = scanner.nextLine();
 			processCommand(command);
-		} while (command.length() > 0);
+		} while (command.length() >= 0);
 	}
 	
 	public static void postLoginConfig(boolean superUser) {
@@ -665,15 +686,9 @@ public class LDBQueries extends LinkedDatabaseFramework{
 				// System.out.println("Usage: java -jar LDBQueries.jar $webroot [$port]");
 				// return;
 				// }
-		
 		/* ::Start::--> (1) */welcomeSetUp(); // Login Setup 
 		$databaseSAVED = 1;
 		/*--> (3)*/LDBFrameworkOptions();
 		/*--> (4)*/continousPrompt();
-		/*--> (5A)*/postLoginConfig(true);
-		/*--> (5B)*/postLoginConfig(false);
-		if (forceServerStart == true) {
-			LDB_Server.closeServerConnection();
-		}
 	}
 }
