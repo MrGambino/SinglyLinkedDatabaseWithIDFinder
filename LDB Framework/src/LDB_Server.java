@@ -89,7 +89,7 @@ public class LDB_Server extends LinkedDatabaseFramework implements HttpHandler {
 		con.setRequestProperty("User-Agent", USER_AGENT);
 		con.setRequestProperty("Accept-Language", "en-US,en;q=0.5");
 
-		String urlParameters = "?username=Admin&pass=root";
+		String urlParameters = "?username="+LDBQueries.DBusername+"&pass="+LDBQueries.DBpassword;
 
 		// Send post request
 		con.setDoOutput(true);
@@ -99,7 +99,7 @@ public class LDB_Server extends LinkedDatabaseFramework implements HttpHandler {
 		wr.close();
 
 		int responseCode = con.getResponseCode();
-		System.out.println("Sending 'POST' request to URL : " + url);
+		System.out.println("<DEBUG>\n" + "Sending 'POST' request to URL : " + url);
 		System.out.println("Post parameters : " + urlParameters);
 		System.out.println("Response Code : " + responseCode);
 
@@ -113,7 +113,7 @@ public class LDB_Server extends LinkedDatabaseFramework implements HttpHandler {
 		in.close();
 
 		// print result
-	    System.out.println(response.toString().trim() + "\n");
+	    System.out.println("Preview Response: " + response.substring(38, 69) + "\n<DEBUG>\n");
 	}
 
 	private static void processFile(String path, File f, boolean gzip) throws IOException {
