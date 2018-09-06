@@ -3,7 +3,8 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.InetSocketAddress;
-import java.util.NoSuchElementException;
+import java.util.Map;
+//import java.util.NoSuchElementException;
 import java.util.Scanner;
 import com.sun.net.httpserver.HttpServer;
 
@@ -133,7 +134,7 @@ public class LDBQueries extends LinkedDatabaseFramework{
 		LDBQueries.failedToLogin = failedToLogin;
 	}
 
-	protected static void welcomeSetUp() throws IOException {
+	protected static void welcomeSetUp() throws Exception {
 		// Check File for setup
 		File configFile = new File("saveUpdatedLDB.txt");
 		File configFile2 = new File("saveUpdatedLDB_U.txt");
@@ -148,6 +149,7 @@ public class LDBQueries extends LinkedDatabaseFramework{
 			System.out.println("\n" + LDB_SaveAndPopulateUniqueIDs.updateCurrentTime() + " - Local:~ Server Connection Starting ....");
 			LDB_Server.server.start();
 			System.out.println(LDB_SaveAndPopulateUniqueIDs.updateCurrentTime() + " - Local:~ http://localhost:" + LDB_Server.port + "/" + "\n");
+			LDB_Server.sendPOST();
 		} else {
 			System.out.println(LDB_SaveAndPopulateUniqueIDs.updateCurrentTime() + " - Local:~ LDB_Framework$ Setup Wizard Starting Up ... ");	
 			System.out.println(LDB_SaveAndPopulateUniqueIDs.updateCurrentTime() + " - Local:~ LDB_Framework$ New Setup Request --> ID# " + newIDString + "\n");
@@ -433,16 +435,27 @@ public class LDBQueries extends LinkedDatabaseFramework{
 	}
 
 	public static void LDBFrameworkOptions() {
-		System.out.println("-------------------------------------------------------------------------------------");
-		System.out.println("\tCommands \t| \tDescription");
-		System.out.println("-------------------------------------------------------------------------------------");
-		System.out.println("?:- USERS -HELP \t  Prints Command/Description list for user");
-		System.out.println("?:- USERS -SU \t\t  Print All user Accounts if Admin");
-		System.out.println("?:- USERS -C \t\t  Change existing account in the LDB Framework");
-		System.out.println("?:- USERS -A \t\t  Adds a new Account to the LDB Framework");
-		System.out.println("?:- USERS -GEN -AUTH \t  Generates a unique ID (DYNAMIC CREATION/DELETION)");
-		System.out.println("?:- USERS -SID.AUTH \t  Shows the user's static unique ID (STATIC)");
-		System.out.println("-------------------------------------------------------------------------------------");
+		System.out.println("-------------------------------------------------------------------------------------------------------------------------------------------------");
+		System.out.println("\tDatabase Commands \t| \tDescription");
+		System.out.println("-------------------------------------------------------------------------------------------------------------------------------------------------");
+		System.out.println("?:- USERS -HELP \t\t  Prints Command/Description list for user");
+		System.out.println("?:- USERS -SU \t\t\t  Print All user Accounts if Admin");
+		System.out.println("?:- USERS -C \t\t\t  Change existing account in the LDB Framework");
+		System.out.println("?:- USERS -A \t\t\t  Adds a new Account to the LDB Framework");
+		System.out.println("?:- USERS -GEN -AUTH \t\t  Generates a unique ID (DYNAMIC CREATION/DELETION)");
+		System.out.println("?:- USERS -SID.AUTH \t\t  Shows the user's static unique ID (STATIC)");
+		System.out.println("-------------------------------------------------------------------------------------------------------------------------------------------------\n");
+		System.out.println("-------------------------------------------------------------------------------------------------------------------------------------------------");
+		System.out.println("\tServer Commands \t| \tDescription");
+		System.out.println("-------------------------------------------------------------------------------------------------------------------------------------------------");
+		System.out.println("?:- GET SERVER data \t\t Requests server data (ex. html, css, js etc.)");
+		System.out.println("?:- GET SERVER hashCode \t Requests server address in hashCode");
+		System.out.println("-------------------------------------------------------------------------------------------------------------------------------------------------\n");
+		System.out.println("-------------------------------------------------------------------------------------------------------------------------------------------------");
+		System.out.println("\tSystem Commands \t\t\t\t| \tDescription");
+		System.out.println("-------------------------------------------------------------------------------------------------------------------------------------------------");
+		System.out.println("?:- LDBFrameworks.SYSTEM[exit -s] -All Services \t  Saves the current database and closes the server connection at port: " + LDB_Server.port);
+		System.out.println("-------------------------------------------------------------------------------------------------------------------------------------------------");
 		System.out.println("");
 	}
 
@@ -564,15 +577,9 @@ public class LDBQueries extends LinkedDatabaseFramework{
 			System.out.print(LDB_SaveAndPopulateUniqueIDs.updateCurrentTime() + " - Local:~ LDB_Framework$ " + LDB_Server.server.hashCode() + "\n");
 		}
 		
-		if (cmd.equals("GET SERVER assets")) {
-			for (LDB_Server.Asset asset: LDB_Server.data.values()) {
-				System.out.print(LDB_SaveAndPopulateUniqueIDs.updateCurrentTime() + " - Local:~ LDB_Framework$ " + asset.toString() + "\n");
-			}
-		}
-		
 		if (cmd.equals("GET SERVER data")) {
-			for (String data$: LDB_Server.data.keySet()) {
-				System.out.print(LDB_SaveAndPopulateUniqueIDs.updateCurrentTime() + " - Local:~ LDB_Framework$ " + data$ + "\n");
+			for (Map.Entry<String, LDB_Server.Asset> data$ : LDB_Server.data.entrySet()) {
+					System.out.print(LDB_SaveAndPopulateUniqueIDs.updateCurrentTime() + " - Local:~ LDB_Framework$ \t{\t addr: "+ data$.getValue().data.toString().toLowerCase() + " \t} " + " \t ------------> \t " + data$.getKey() + "\n");
 			}
 		}
 		
@@ -681,7 +688,7 @@ public class LDBQueries extends LinkedDatabaseFramework{
 		}
 	}
 
-	public static void main(String[] args) throws NoSuchElementException, IOException {
+	public static void main(String[] args) throws Exception {
 		// if (args.length < 1 || args[0].equals("-help") || args[0].equals("--help")) {
 				// System.out.println("Usage: java -jar LDBQueries.jar $webroot [$port]");
 				// return;
