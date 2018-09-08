@@ -7,12 +7,15 @@ import com.sun.net.httpserver.*;
 
 public class LDB_Server extends LinkedDatabaseFramework implements HttpHandler {
 	// Server variables
-	public  static HttpServer server;
+	public static HttpServer serverADMIN, serverUSER;
 	public  static Map<String, Asset> data = new HashMap<String, Asset>();
 	private final boolean caching, gzip;
 	private final String pathToRoot;
-	public  static int port = 8000;
-	public static String USER_AGENT = "Mozilla/5.0 (iPhone; CPU iPhone OS 11_0 like Mac OS X) AppleWebKit/604.1.38 (KHTML, like Gecko) Version/11.0 Mobile/15A372 Safari/604.1";
+	public  static  int portUSER = 8000;
+	public  static int portADMIN = 8080;
+	private static String responseHeader;
+	private static String requestHeader;
+	public  static String USER_AGENT = "Mozilla/5.0 (iPhone; CPU iPhone OS 11_0 like Mac OS X) AppleWebKit/604.1.38 (KHTML, like Gecko) Version/11.0 Mobile/15A372 Safari/604.1";
 
 	public LDB_Server(String pathToRoot, boolean caching, boolean gzip) throws IOException {
 		this.caching = caching;
@@ -67,6 +70,8 @@ public class LDB_Server extends LinkedDatabaseFramework implements HttpHandler {
 			}
 			httpExchange.sendResponseHeaders(200, res.data.length);
 			httpExchange.getResponseBody().write(res.data);
+			requestHeader = httpExchange.getRequestHeaders().values().toString();
+			responseHeader = httpExchange.getResponseHeaders().values().toString();
 			httpExchange.getResponseBody().close();
 
 		} catch (NullPointerException t) {
@@ -78,9 +83,8 @@ public class LDB_Server extends LinkedDatabaseFramework implements HttpHandler {
 	}
 	
 	// HTTP POST request
-	public static void sendPOST() throws Exception {
+	public static void sendPOST(String url) throws Exception {
 
-		String url = "http://localhost:8000/";
 		URL obj = new URL(url);
 		HttpURLConnection con = (HttpURLConnection) obj.openConnection();
 
@@ -90,7 +94,7 @@ public class LDB_Server extends LinkedDatabaseFramework implements HttpHandler {
 		con.setRequestProperty("Accept-Language", "en-US,en;q=0.5");
 
 		String urlParameters = "?username="+LDBQueries.DBusername+"&pass="+LDBQueries.DBpassword;
-
+		
 		// Send post request
 		con.setDoOutput(true);
 		DataOutputStream wr = new DataOutputStream(con.getOutputStream());
@@ -113,7 +117,9 @@ public class LDB_Server extends LinkedDatabaseFramework implements HttpHandler {
 		in.close();
 
 		// print result
-	    System.out.println("Preview Response: " + response.substring(38, 69) + "\n<DEBUG>\n");
+	    System.out.println("Preview Response: " + response.toString());
+	    System.out.println("Response Headers: " + responseHeader);
+	    System.out.println("Request Headers: " + requestHeader + "\n<DEBUG>\n");
 	}
 
 	private static void processFile(String path, File f, boolean gzip) throws IOException {
@@ -206,10 +212,12 @@ public class LDB_Server extends LinkedDatabaseFramework implements HttpHandler {
 		return resources;
 	}
 	
-	static void closeServerConnection() {
+	public static void closeServerConnection(){
 		// TODO Auto-generated method stub
-		System.out.println("\n" + LDB_SaveAndPopulateUniqueIDs.updateCurrentTime() + " - Local:~ Server Connection Stopped");
-		System.out.println(LDB_SaveAndPopulateUniqueIDs.updateCurrentTime() + " - Local:~ http://localhost:" + port + "/" + " --> Connection Disabled");
-		server.stop(port);
+		System.out.println("\n" + LDB_SaveAndPopulateUniqueIDs.updateCurrentTime() + " - Local:~ [ADMIN] Server Connection Stopped");
+		System.out.println(LDB_SaveAndPopulateUniqueIDs.updateCurrentTime() + " - Local:~ [ADMIN PORTAL] http://localhost:" + portADMIN + "/" + " --> Connection Disabled\n");
+		System.out.println("\n" + LDB_SaveAndPopulateUniqueIDs.updateCurrentTime() + " - Local:~ [USER] Server Connection Stopped");
+		System.out.println(LDB_SaveAndPopulateUniqueIDs.updateCurrentTime() + " - Local:~ [USER PORTAL] http://localhost:" + portUSER + "/" + " --> Connection Disabled\n");
+		System.exit(0);
 	}
 }

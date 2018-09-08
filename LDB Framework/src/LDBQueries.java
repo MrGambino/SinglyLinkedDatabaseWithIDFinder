@@ -26,7 +26,7 @@ import com.sun.net.httpserver.HttpServer;
  * easily and they would have a hard time cracking the encrypted hash passwords.
  * 
  * @author Sirak Berhane
- * @version VERSION 1.1.1 REV 45
+ * @version VERSION 1.1.1 REV 51
  */
 
 public class LDBQueries extends LinkedDatabaseFramework{
@@ -143,13 +143,53 @@ public class LDBQueries extends LinkedDatabaseFramework{
 		if (configFile.exists() && configFile2.exists() && IDFile.exists() && configFile3.exists()) {
 			/*--> (2)*/loginPrompt();
 			forceServerStart =  true;
-			LDB_Server.server = HttpServer.create();
-			LDB_Server.server.createContext("/", new LDB_Server("LDB Framework/interface", false, false));
-			LDB_Server.server.bind(new InetSocketAddress("localhost", LDB_Server.port), 100);
-			System.out.println("\n" + LDB_SaveAndPopulateUniqueIDs.updateCurrentTime() + " - Local:~ Server Connection Starting ....");
-			LDB_Server.server.start();
-			System.out.println(LDB_SaveAndPopulateUniqueIDs.updateCurrentTime() + " - Local:~ http://localhost:" + LDB_Server.port + "/" + "\n");
-			LDB_Server.sendPOST();
+			LDB_Server.serverADMIN = HttpServer.create();
+			LDB_Server.serverADMIN.createContext("/", new LDB_Server("LDB Framework/interface/admin", true, false));
+			LDB_Server.serverADMIN.createContext("/admin", new LDB_Server("LDB Framework/interface/admin", true, false));
+			LDB_Server.serverADMIN.createContext("/admin/dashboard", new LDB_Server("LDB Framework/interface/admin/admin-dashboard", true, false));
+			LDB_Server.serverADMIN.createContext("/api", new LDB_Server("LDB Framework/interface/admin/api", true, false));
+			LDB_Server.serverADMIN.bind(new InetSocketAddress("localhost", LDB_Server.portADMIN), 101);
+			
+			LDB_Server.serverUSER = HttpServer.create();
+			LDB_Server.serverUSER.createContext("/", new LDB_Server("LDB Framework/interface/user", true, false));
+			LDB_Server.serverUSER.createContext("/user", new LDB_Server("LDB Framework/interface/user", true, false));
+			LDB_Server.serverUSER.createContext("/user/dashboard", new LDB_Server("LDB Framework/interface/user/user-dashboard", true, false));
+			LDB_Server.serverUSER.createContext("/api", new LDB_Server("LDB Framework/interface/user/vendor/api", true, false));
+			LDB_Server.serverUSER.bind(new InetSocketAddress("localhost", LDB_Server.portUSER), 100);
+			
+			try {
+				System.out.println("\n" + LDB_SaveAndPopulateUniqueIDs.updateCurrentTime() + " - Local:~ [ADMIN] Server Connection Starting ....");
+				LDB_Server.serverADMIN.start();
+				System.out.println(LDB_SaveAndPopulateUniqueIDs.updateCurrentTime() + " - Local:~ [SUCESS --> ADMIN PORTAL] Connection Established!");
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				System.out.println(LDB_SaveAndPopulateUniqueIDs.updateCurrentTime() + " - Local:~ Server Connection Error: " + e);
+			}
+			
+			System.out.println("\n" + LDB_SaveAndPopulateUniqueIDs.updateCurrentTime() + " - Local:~ ADMIN LOGIN ");
+			System.out.println(LDB_SaveAndPopulateUniqueIDs.updateCurrentTime() + " - Local:~ http://localhost:" + LDB_Server.portADMIN + "/");
+			System.out.println(LDB_SaveAndPopulateUniqueIDs.updateCurrentTime() + " - Local:~ http://localhost:" + LDB_Server.portADMIN + "/admin");
+			System.out.println(LDB_SaveAndPopulateUniqueIDs.updateCurrentTime() + " - Local:~ http://localhost:" + LDB_Server.portADMIN + "/admin/dashboard");
+			System.out.println(LDB_SaveAndPopulateUniqueIDs.updateCurrentTime() + " - Local:~ http://localhost:" + LDB_Server.portADMIN + "/api" + "\n");
+			LDB_Server.sendPOST("http://localhost:8080/admin");
+			LDB_Server.sendPOST("http://localhost:8080/api");
+			
+			try {
+				System.out.println("\n" + LDB_SaveAndPopulateUniqueIDs.updateCurrentTime() + " - Local:~ [USER] Server Connection Starting ....");
+				LDB_Server.serverUSER.start();
+				System.out.println(LDB_SaveAndPopulateUniqueIDs.updateCurrentTime() + " - Local:~ [SUCESS --> USER PORTAL] Connection Established!\n");
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				System.out.println(LDB_SaveAndPopulateUniqueIDs.updateCurrentTime() + " - Local:~ Server Connection Error: " + e);
+			}
+			
+			System.out.println(LDB_SaveAndPopulateUniqueIDs.updateCurrentTime() + " - Local:~ USER LOGIN ");
+			System.out.println(LDB_SaveAndPopulateUniqueIDs.updateCurrentTime() + " - Local:~ http://localhost:" + LDB_Server.portUSER + "/");
+			System.out.println(LDB_SaveAndPopulateUniqueIDs.updateCurrentTime() + " - Local:~ http://localhost:" + LDB_Server.portUSER + "/user");
+			System.out.println(LDB_SaveAndPopulateUniqueIDs.updateCurrentTime() + " - Local:~ http://localhost:" + LDB_Server.portUSER + "/user/dashboard");
+			System.out.println(LDB_SaveAndPopulateUniqueIDs.updateCurrentTime() + " - Local:~ http://localhost:" + LDB_Server.portUSER + "/api" + "\n");
+			LDB_Server.sendPOST("http://localhost:8000/user");
+			LDB_Server.sendPOST("http://localhost:8000/api");
 		} else {
 			System.out.println(LDB_SaveAndPopulateUniqueIDs.updateCurrentTime() + " - Local:~ LDB_Framework$ Setup Wizard Starting Up ... ");	
 			System.out.println(LDB_SaveAndPopulateUniqueIDs.updateCurrentTime() + " - Local:~ LDB_Framework$ New Setup Request --> ID# " + newIDString + "\n");
@@ -449,12 +489,12 @@ public class LDBQueries extends LinkedDatabaseFramework{
 		System.out.println("\tServer Commands \t| \tDescription");
 		System.out.println("-------------------------------------------------------------------------------------------------------------------------------------------------");
 		System.out.println("?:- GET SERVER data \t\t Requests server data (ex. html, css, js etc.)");
-		System.out.println("?:- GET SERVER hashCode \t Requests server address in hashCode");
+		System.out.println("?:- GET SERVER hashCode \t Requests server address in hashCode (.ADMIN or .USER)");
 		System.out.println("-------------------------------------------------------------------------------------------------------------------------------------------------\n");
 		System.out.println("-------------------------------------------------------------------------------------------------------------------------------------------------");
 		System.out.println("\tSystem Commands \t\t\t\t| \tDescription");
 		System.out.println("-------------------------------------------------------------------------------------------------------------------------------------------------");
-		System.out.println("?:- LDBFrameworks.SYSTEM[exit -s] -All Services \t  Saves the current database and closes the server connection at port: " + LDB_Server.port);
+		System.out.println("?:- LDBFrameworks.SYSTEM[exit -s] -All Services \t  Saves the current database and closes the server connection at ports: " + LDB_Server.portUSER + ":" + LDB_Server.portADMIN);
 		System.out.println("-------------------------------------------------------------------------------------------------------------------------------------------------");
 		System.out.println("");
 	}
@@ -573,8 +613,12 @@ public class LDBQueries extends LinkedDatabaseFramework{
 		
 		
 		// Note: Server-ONLY commands (port 8000)
-		if (cmd.equals("GET SERVER hashCode")) {
-			System.out.print(LDB_SaveAndPopulateUniqueIDs.updateCurrentTime() + " - Local:~ LDB_Framework$ " + LDB_Server.server.hashCode() + "\n");
+		if (cmd.equals("GET SERVER hashCode.ADMIN")) {
+			System.out.print(LDB_SaveAndPopulateUniqueIDs.updateCurrentTime() + " - Local:~ LDB_Framework$ " + LDB_Server.serverADMIN.hashCode() + "\n");
+		}
+		
+		if (cmd.equals("GET SERVER hashCode.USER")) {
+			System.out.print(LDB_SaveAndPopulateUniqueIDs.updateCurrentTime() + " - Local:~ LDB_Framework$ " + LDB_Server.serverUSER.hashCode() + "\n");
 		}
 		
 		if (cmd.equals("GET SERVER data")) {
@@ -584,14 +628,16 @@ public class LDBQueries extends LinkedDatabaseFramework{
 		}
 		
 		// System-wide Command
-		if (cmd.equals("LDBFrameworks.SYSTEM[exit -s] -All Services")) {
+		if (cmd.equals("LDBFrameworks.SYSTEM[exit -s] -All Services") || cmd.equals("SYSTEM.exit(LDB)")) {
 			/*--> (5A)*/postLoginConfig(true);
 			/*--> (5B)*/postLoginConfig(false);
 			if (forceServerStart == true) {
+				scanner.close();
 				LDB_Server.closeServerConnection();
+			    System.exit(0);
 			}
 			scanner.close();
-			System.exit(0);
+		    System.exit(0);
 		}
 		
 		if (cmd.equals("")) {
