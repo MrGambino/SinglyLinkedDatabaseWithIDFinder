@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en" class="no-js">
+
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<title>Administrator Portal</title>
+		<link rel="shortcut icon" type="image/x-icon" href="./img/favicon.ico" />
+		<link rel="stylesheet" type="text/css" href="./css/normalize.css" />
+		<link rel="stylesheet" type="text/css" href="./css/component.css" />
+		<link rel="stylesheet" type="text/css" href="./css/slp.css" />
+		<link href='https://fonts.googleapis.com/css?family=Raleway:200,400,800' rel='stylesheet' type='text/css'>
+	</head>
+
+<body>
+<div id="particles-js"><canvas width="cover" height="cover" class="particles-js-canvas-el" style="width: 100%; height: 100%;"></canvas></div>
+<div class="showcase-pagination"> <div title="Sign up" class="dot active"></div>  <div title="Slide effect" class="dot"></div>  <div title="" class="dot"></div>  <div title="" class="dot"></div>  <div title="" class="dot"></div>
+<div class="container">
+      <div id="login">
+        <form id="login" action="login.php" method="POST" accept-charset="UTF-8">
+          <fieldset class="clearfix">
+            <p><span class="far fa-user"></span><input type="text" for="username" name="username" id="username" autocomplete="off" value="Username" onBlur="if(this.value == '') this.value = 'Username'" onFocus="if(this.value == 'Username') this.value = ''" required></p> <!-- JS because of IE support; better: placeholder="Username" -->
+            <p><span class="fas fa-key"></span><input type="password" for="password" name="password" id="password" autocomplete="off" value="Password" onBlur="if(this.value == '') this.value = 'Password'" onFocus="if(this.value == 'Password') this.value = ''" required></p> <!-- JS because of IE support; better: placeholder="Password" -->
+            <p><input type="submit" name="submit" value="Sign In"></p>
+          </fieldset>
+        </form>
+      </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+    <script src="./js/TweenLite.min.js"></script>
+		<script src="./js/EasePack.min.js"></script>
+		<script src="./js/rAF.js"></script>
+		<script src="./js/particles.js"></script>
+
+</body>
+</html>

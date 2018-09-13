@@ -144,17 +144,13 @@ public class LDBQueries extends LinkedDatabaseFramework{
 			/*--> (2)*/loginPrompt();
 			forceServerStart =  true;
 			LDB_Server.serverADMIN = HttpServer.create();
-			LDB_Server.serverADMIN.createContext("/", new LDB_Server("LDB Framework/interface/admin", true, false));
-			LDB_Server.serverADMIN.createContext("/admin", new LDB_Server("LDB Framework/interface/admin", true, false));
-			LDB_Server.serverADMIN.createContext("/admin-dashboard", new LDB_Server("LDB Framework/interface/admin/admin-dashboard", true, false));
-			LDB_Server.serverADMIN.createContext("/api", new LDB_Server("LDB Framework/interface/admin/api", true, false));
+			LDB_Server.serverADMIN.createContext("/", new LDB_Server("LDB Framework/interface/HOME", true, false));
+			LDB_Server.serverADMIN.createContext("/api", new LDB_Server("LDB Framework/interface/HOME/api", true, false));
 			LDB_Server.serverADMIN.bind(new InetSocketAddress("localhost", LDB_Server.portADMIN), 101);
 			
 			LDB_Server.serverUSER = HttpServer.create();
-			LDB_Server.serverUSER.createContext("/", new LDB_Server("LDB Framework/interface/user", true, false));
-			LDB_Server.serverUSER.createContext("/user", new LDB_Server("LDB Framework/interface/user", true, false));
-			LDB_Server.serverUSER.createContext("/user-dashboard", new LDB_Server("LDB Framework/interface/user/user-dashboard", true, false));
-			LDB_Server.serverUSER.createContext("/api", new LDB_Server("LDB Framework/interface/user/vendor/api", true, false));
+			LDB_Server.serverUSER.createContext("/", new LDB_Server("LDB Framework/interface/HOME", true, false));
+			LDB_Server.serverUSER.createContext("/api", new LDB_Server("LDB Framework/interface/HOME/api", true, false));
 			LDB_Server.serverUSER.bind(new InetSocketAddress("localhost", LDB_Server.portUSER), 100);
 			
 			try {
@@ -168,10 +164,8 @@ public class LDBQueries extends LinkedDatabaseFramework{
 			
 			System.out.println("\n" + LDB_SaveAndPopulateUniqueIDs.updateCurrentTime() + " - Local:~ ADMIN LOGIN ");
 			System.out.println(LDB_SaveAndPopulateUniqueIDs.updateCurrentTime() + " - Local:~ http://localhost:" + LDB_Server.portADMIN + "/");
-			System.out.println(LDB_SaveAndPopulateUniqueIDs.updateCurrentTime() + " - Local:~ http://localhost:" + LDB_Server.portADMIN + "/admin");
-			System.out.println(LDB_SaveAndPopulateUniqueIDs.updateCurrentTime() + " - Local:~ http://localhost:" + LDB_Server.portADMIN + "/admin-dashboard");
 			System.out.println(LDB_SaveAndPopulateUniqueIDs.updateCurrentTime() + " - Local:~ http://localhost:" + LDB_Server.portADMIN + "/api" + "\n");
-			LDB_Server.sendPOST("http://localhost:8080/admin");
+			LDB_Server.sendPOST("http://localhost:8080/");
 			LDB_Server.sendPOST("http://localhost:8080/api");
 			
 			try {
@@ -185,10 +179,8 @@ public class LDBQueries extends LinkedDatabaseFramework{
 			
 			System.out.println(LDB_SaveAndPopulateUniqueIDs.updateCurrentTime() + " - Local:~ USER LOGIN ");
 			System.out.println(LDB_SaveAndPopulateUniqueIDs.updateCurrentTime() + " - Local:~ http://localhost:" + LDB_Server.portUSER + "/");
-			System.out.println(LDB_SaveAndPopulateUniqueIDs.updateCurrentTime() + " - Local:~ http://localhost:" + LDB_Server.portUSER + "/user");
-			System.out.println(LDB_SaveAndPopulateUniqueIDs.updateCurrentTime() + " - Local:~ http://localhost:" + LDB_Server.portUSER + "/user-dashboard");
 			System.out.println(LDB_SaveAndPopulateUniqueIDs.updateCurrentTime() + " - Local:~ http://localhost:" + LDB_Server.portUSER + "/api" + "\n");
-			LDB_Server.sendPOST("http://localhost:8000/user");
+			LDB_Server.sendPOST("http://localhost:8000/");
 			LDB_Server.sendPOST("http://localhost:8000/api");
 		} else {
 			System.out.println(LDB_SaveAndPopulateUniqueIDs.updateCurrentTime() + " - Local:~ LDB_Framework$ Setup Wizard Starting Up ... ");	
