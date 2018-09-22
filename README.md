@@ -34,7 +34,7 @@ The LDB database uses modern password hashing. When the user first makes a passw
 
 * Java SE Runtime Environment 10.0.2 or higher
 * Selenium driver installed for Google Chrome (Google chrome Browser should already be installed)
-* Internet Connection for SOftware updates (Future Implementation) 
+* Internet Connection for software updates (Future Implementation) 
 
 # Future Implementations 
 
