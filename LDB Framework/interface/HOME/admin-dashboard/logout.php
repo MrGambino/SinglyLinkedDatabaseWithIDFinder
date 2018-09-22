@@ -1,10 +1,18 @@
-<?php
-// Always start this first
-session_start();
-// Destroying the session clears the $_SESSION variable, thus "logging" the user
-// out. This also happens automatically when the browser is closed
-session_destroy();
-
-header('Location: http://localhost:80/');
-exit;
-?>
+<html>
+<script>
+  function checkFirstVisit() {
+    if(sessionStorage.getItem("is_reloaded")) {
+      alert('Logging OFF..');
+      <?php
+            setcookie('AUTH', '', 1, '/');
+            setcookie('AUTH', '', 1, '/admin-dashboard');
+            if (!(isset($_COOKIE['AUTH']))){
+                header('Location: home.php');
+                exit;
+              }
+        ?>
+        alert('Logged out --> Session Expired!');
+      }
+  }
+</script>
+<html>

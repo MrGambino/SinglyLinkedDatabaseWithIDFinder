@@ -59,6 +59,10 @@ public class LDB_Server extends LinkedDatabaseFramework implements HttpHandler {
 				httpExchange.getResponseHeaders().set("Content-Type", "text/html");
 			else if (path.endsWith(".css"))
 				httpExchange.getResponseHeaders().set("Content-Type", "text/css");
+			else if (path.endsWith(".php")) {
+				httpExchange.getResponseHeaders().set("Connection", "Keep-Alive");
+				httpExchange.getResponseHeaders().set("Content-Type", "text/html; charset=UTF-8");
+			}
 			else if (path.endsWith(".json"))
 				httpExchange.getResponseHeaders().set("Content-Type", "application/json");
 			else if (path.endsWith(".svg"))

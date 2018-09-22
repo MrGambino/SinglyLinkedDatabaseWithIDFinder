@@ -8,6 +8,11 @@ import java.util.Map;
 import java.util.Scanner;
 import com.sun.net.httpserver.HttpServer;
 
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
+
 /**
  * Using Java WebSocket and Dynamic Web Editor, this server-socket is able to
  * auto-generate unique codes, find user IDs, and remove selected users from the
@@ -82,7 +87,7 @@ public class LDBQueries extends LinkedDatabaseFramework{
 	
 	// Server OFF/ON flag
 	protected static boolean forceServerStart = false;
-
+	
 	public LDBQueries(Object username, Object password, boolean superUser) {
 		// Super-User
 		if (superUser == true) {
@@ -144,13 +149,13 @@ public class LDBQueries extends LinkedDatabaseFramework{
 			/*--> (2)*/loginPrompt();
 			forceServerStart =  true;
 			LDB_Server.serverADMIN = HttpServer.create();
-			LDB_Server.serverADMIN.createContext("/", new LDB_Server("LDB Framework/interface/HOME", true, false));
-			LDB_Server.serverADMIN.createContext("/api", new LDB_Server("LDB Framework/interface/HOME/api", true, false));
+			LDB_Server.serverADMIN.createContext("/", new LDB_Server("LDB Framework/interface/HOME", false, false));
+			LDB_Server.serverADMIN.createContext("/api", new LDB_Server("LDB Framework/interface/HOME/api", false, false));
 			LDB_Server.serverADMIN.bind(new InetSocketAddress("localhost", LDB_Server.portADMIN), 101);
 			
 			LDB_Server.serverUSER = HttpServer.create();
-			LDB_Server.serverUSER.createContext("/", new LDB_Server("LDB Framework/interface/HOME", true, false));
-			LDB_Server.serverUSER.createContext("/api", new LDB_Server("LDB Framework/interface/HOME/api", true, false));
+			LDB_Server.serverUSER.createContext("/", new LDB_Server("LDB Framework/interface/HOME", false, false));
+			LDB_Server.serverUSER.createContext("/api", new LDB_Server("LDB Framework/interface/HOME/api", false, false));
 			LDB_Server.serverUSER.bind(new InetSocketAddress("localhost", LDB_Server.portUSER), 100);
 			
 			try {
@@ -196,6 +201,7 @@ public class LDBQueries extends LinkedDatabaseFramework{
 		// Else -> Do the setup
 		// Check these files each time the program runs --> ["saveUpdatedLDB.txt" && "saveUpdatedLDB_U.txt"]
 		//		----> If they are deleted or unreadable make a new setup file!
+		automatedLoginInterface(DBusername, DBpassword);
 	}
 
 	private static void loginAuthentication(String Client_username, String Client_password) {
@@ -224,6 +230,26 @@ public class LDBQueries extends LinkedDatabaseFramework{
 								+ attemptToLoginFailed + " out of 5 attempts left to login.");
 			}
 		}
+	}
+	
+	private static void automatedLoginInterface(String username, String password){
+		// Automated Login
+		// WebDriver for automated login
+		System.setProperty("webdriver.chrome.driver","C:\\chromedriver_win32\\chromedriver.exe");
+		
+		// Open a new browser
+		WebDriver driver;
+		driver = new ChromeDriver();
+		driver.navigate().to("http://localhost:8080/");
+				
+		driver.findElement(By.id("username")).click();
+		driver.findElement(By.id("username")).sendKeys(username);
+				
+		driver.findElement(By.id("password")).click();
+		driver.findElement(By.id("password")).sendKeys(password);	
+				
+		//Submit
+		driver.findElement(By.name("submit")).click();
 	}
 
 	private static void findIncr() throws FileNotFoundException {

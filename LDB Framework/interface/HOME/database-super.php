@@ -5,6 +5,7 @@
 class DB extends SQLite3 {
     const DATABASE_NAME = 'db/database_users.db';
     const BCRYPT_COST = 14;
+    public static $user;
     /**
      * DB class constructor. Initialize method is called, which will create users table if it does
      * not exist already.
@@ -40,7 +41,6 @@ class DB extends SQLite3 {
             $storedPassword = $this->getUsersPassword($username);
             if ($password == $storedPassword) {
                 $authenticated = true;
-                $_POST[$_SESSION['user_id']] = $username->ID;
             } else {
                 $authenticated = false;
             }

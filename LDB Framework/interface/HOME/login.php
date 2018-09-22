@@ -1,4 +1,5 @@
 <?php
+session_start();
 require_once('database-super.php');
 /**
  * Checks if the given parameters are set. If one of the specified parameters is not set,
@@ -11,16 +12,18 @@ function checkPOSTParametersOrDie($parameters) {
         isset($_POST[$parameter]) || die("'$parameter' parameter must be set by POST method.");
     }
 }
-$_SESSION['auth'] = false;
+
 checkPOSTParametersOrDie(['username', 'password']);
 $username = $_POST['username'];
 $password = $_POST['password'];
 $db = new DB();
 $authenticated = $db->authenticateUser($username, $password);
 if ($authenticated) {
-    $_SESSION['auth'] = true;
-    $response = "Hello $username, you have been successfully authenticated. Redirecting ...";
-    header('Location: ./admin-dashboard/admin-dashboard.html');
+    $time = time();
+    $_currentSessionID = session_id();
+    $_expires = $time + 3600;
+    setcookie('AUTH', $_currentSessionID, $_expires);
+    header('Location: /admin-dashboard/home.php');
     exit;
 } else {
     $response = "Incorrect credentials or user does not exist.";
