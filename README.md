@@ -30,6 +30,11 @@ The LDB database uses modern password hashing. When the user first makes a passw
 
 ![alt text](https://github.com/MrGambino/SinglyLinkedDatabaseWithIDFinder/blob/master/Screen%20Shot%202018-07-25%20at%2010.44.53%20AM.png) 
 
+# Project Dependencies
+
+* Java SE Runtime Environment 10.0.2 or higher
+* Selenium driver installed for Google Chrome (Google chrome Browser should already be installed)
+* Internet Connection for SOftware updates (Future Implementation) 
 
 # Future Implementations 
 
@@ -38,4 +43,5 @@ The LDB database uses modern password hashing. When the user first makes a passw
 * Automated Login (Admin-Only)
 * Network Handling - Admin vs. User website Re-directing (Admin-Only)
 * Virtual/Nano LDB Framework (Admin + User)
-* Implement U2F/FIDO Authentication + NFC support for IOS/Android 
+* Implement U2F/FIDO Authentication + NFC support for IOS/Android
+* Software dependency checker (If user has a software missing, alert them to install) 
