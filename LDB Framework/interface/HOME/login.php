@@ -1,4 +1,4 @@
-<?php
+<!-- <?php
 session_start();
 require_once('database-super.php');
 /**
@@ -31,4 +31,17 @@ if ($authenticated) {
     exit;
 }
 echo $response;
-?>
+?> -->
+<html>
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Redirecting ...</title>
+  <link rel="shortcut icon" type="image/x-icon" href="./img/favicon.ico" />
+</head>
+
+<body>
+  <p style="color:red; text-size:30px;">REDIRECTING USER ....</p>
+</body>
+</html>

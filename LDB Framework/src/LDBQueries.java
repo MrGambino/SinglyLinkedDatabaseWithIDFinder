@@ -4,11 +4,8 @@ import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.InetSocketAddress;
 import java.util.Map;
-//import java.util.NoSuchElementException;
 import java.util.Scanner;
 import com.sun.net.httpserver.HttpServer;
-
-import org.openqa.selenium.WebElement;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
