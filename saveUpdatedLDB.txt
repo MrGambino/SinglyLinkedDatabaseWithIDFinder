@@ -2,24 +2,6 @@
 Username=cm9vdA==
 Password=-1442567393
 
-Username=
-Password=2018-11-12 09:44:29
-
-Username=YzJseVlXcz0=
-Password=1314151254
-
-Username=
-Password=2018-11-12 09:44:29
-
-Username=cm9vdA==
-Password=-1442567393
-
-Username=cm9vdA==
-Password=-1442567393
-
-Username=c2lyYWs=
-Password=1314151254
-
 Username=Ignore
 Password=null
 
