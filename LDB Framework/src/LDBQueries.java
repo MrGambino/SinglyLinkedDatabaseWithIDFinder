@@ -184,6 +184,8 @@ public class LDBQueries extends LinkedDatabaseFramework{
 			System.out.println(LDB_SaveAndPopulateUniqueIDs.updateCurrentTime() + " - Local:~ http://localhost:" + LDB_Server.portUSER + "/api" + "\n");
 			LDB_Server.sendPOST("http://localhost:8000/");
 			LDB_Server.sendPOST("http://localhost:8000/api");
+			
+			automatedLoginInterface(DBusername, DBpassword);
 		} else {
 			System.out.println(LDB_SaveAndPopulateUniqueIDs.updateCurrentTime() + " - Local:~ LDB_Framework$ Setup Wizard Starting Up ... ");	
 			System.out.println(LDB_SaveAndPopulateUniqueIDs.updateCurrentTime() + " - Local:~ LDB_Framework$ New Setup Request --> ID# " + newIDString + "\n");
@@ -198,7 +200,6 @@ public class LDBQueries extends LinkedDatabaseFramework{
 		// Else -> Do the setup
 		// Check these files each time the program runs --> ["saveUpdatedLDB.txt" && "saveUpdatedLDB_U.txt"]
 		//		----> If they are deleted or unreadable make a new setup file!
-		automatedLoginInterface(DBusername, DBpassword);
 	}
 
 	private static void loginAuthentication(String Client_username, String Client_password) {
@@ -232,7 +233,7 @@ public class LDBQueries extends LinkedDatabaseFramework{
 	private static void automatedLoginInterface(String username, String password){
 		// Automated Login
 		// WebDriver for automated login
-		System.setProperty("webdriver.chrome.driver","C:\\chromedriver_win32\\chromedriver.exe");
+		System.setProperty("webdriver.chrome.driver","library\\chromedriver_win32\\chromedriver.exe");
 		
 		// Open a new browser
 		WebDriver driver;
